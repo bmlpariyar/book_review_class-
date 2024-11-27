@@ -16,6 +16,9 @@ def book_details(request, book_id):
     review_ratings = Review.RATING_CHOICES
     context = {"book": book, "reviews": reviews, "review_ratings": review_ratings}
     return render(request, "books/book_details.html", context)
+
+
+
 @login_required
 def new_book(request, book_id=None):
     book = get_object_or_404(Book, id=book_id) if book_id else None
@@ -39,6 +42,8 @@ def delete_book(request, book_id):
     except Exception as e:
         return HttpResponse(e)
     
+
+
 
 @login_required
 def add_review(request, book_id):
@@ -79,3 +84,12 @@ def delete_review(request, review_id):
     except Exception as e:
         messages.error(request, e)
         return redirect(f"/book_details/{review.book.id}")
+    
+@login_required
+def add_comment(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    if request.method == "POST":
+        comment_text = request.POST.get("comment_text")
+        comment = review.comments.create(user=request.user, comment_text=comment_text)
+        return redirect(f"/book_details/{review.book.id}")
+    return redirect(f"/book_details/{review.book.id}")

@@ -6,4 +6,5 @@ from .models import *
 admin.site.register(Author)
 admin.site.register(Book)   
 admin.site.register(Review)
+admin.site.register(Comment)
 

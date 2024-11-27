@@ -1,29 +1,47 @@
 <h2>Reviews</h2>
 {% for review in reviews %}
-<p>{{ review.user.username }}</p>
-<p>{{ review.rating }}</p>
-<p>{{ review.review_text }}</p>
-<p>{{ review.created_at|date:"Y-m-d H:i" }}</p>
-{% include "reviews/edit_review.html" %}
-{% if user.is_authenticated and review.user == user %}
-<div>
-  <button class="edit-button" onclick="editReview({{ review.id }})">
-    Edit
-  </button>
-  <button><a href="{% url 'delete_review' review.id %}">Delete</a></button>
-</div>
-{% endif%}
-<hr />
+  <p>{{ review.user.username }}</p>
+  <p>{{ review.rating }}</p>
+  <p>{{ review.review_text }}</p>
+  <p>{{ review.created_at|date:"Y-m-d H:i" }}</p>
+  <a href="#" onclick="commentReview({{ review.id }})">Comment</a>
+  {% include "reviews/review_comment.html" %}
+  <hr>
+  {% include "reviews/edit_review.html" %}
+  <hr>
+  <div style="padding-left: 40px">
+    {% for comment in review.comments.all %}
+      <p>{{ comment.user.username }}</p>
+      <p>{{ comment.comment_text }}</p>
+      <hr>
+    {% endfor %}
+  </div>
+  {% if user.is_authenticated and review.user == user %}
+    <div>
+      <button class="edit-button" onclick="editReview({{ review.id }})">Edit</button>
+      <button>
+        <a href="{% url 'delete_review' review.id %}">Delete</a>
+      </button>
+    </div>
+  {% endif %}
+  <hr />
 {% empty %}
-<p>No reviews yet. Be the first to review!</p>
+  <p>No reviews yet. Be the first to review!</p>
 {% endfor %}
-
 <script>
   function editReview(reviewId) {
     document.querySelectorAll(".edit-form").forEach(function (form) {
       form.style.display = "none";
     });
     const form = document.getElementById("edit-form-" + reviewId);
+    form.style.display = form.style.display === "none" || form.style.display === "" ? "block" : "none";
+  }
+
+  function commentReview(reviewId) {
+    document.querySelectorAll(".comment-form").forEach(function (form) {
+      form.style.display = "none";
+    });
+    const form = document.getElementById("comment-form-" + reviewId);
     form.style.display = form.style.display === "none" || form.style.display === "" ? "block" : "none";
   }
 </script>
