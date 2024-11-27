@@ -1,0 +1,18 @@
+<form action="{% url 'add_review' book.id %}" method="POST">
+  {% csrf_token %} {% if messages %} {% for message in messages %}
+  <div style="color: red">{{ message }}</div>
+  {% endfor %} {% endif %} {% if form.errors %} {{ form.errors }} {% endif %}
+  <input
+    type="text"
+    name="review_text"
+    id="review_text"
+    placeholder="Enter your review"
+  />
+  <select name="rating" id="rating">
+    <option value="">Select Rating</option>
+    {% for rating in review_ratings %}
+    <option value="{{ rating.0 }}">{{ rating.1 }}</option>
+    {% endfor %}
+  </select>
+  <input type="submit" value="Submit" />
+</form>

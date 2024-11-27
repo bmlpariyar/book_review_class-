@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block content %}
+<h1>This is a index page</h1>
+<button><a href="{% url 'new_book_from' %}">New Book</a></button>
+<br> <br>
+{% for book in books %}
+<a href="{% url "book_details" book.id %}">
+    <p>{{ book.title }}</p>
+    <p>{{ book.description }}</p>
+    {% if user.is_authenticated %}
+        <button><a href="{% url 'delete_book' book.id %}">Delete</a></button>
+    {% endif %}
+    <hr>
+</a>
+
+{% endfor %} {% endblock content %}

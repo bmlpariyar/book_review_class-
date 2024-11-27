@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=`, initial-scale=1.0" />
+    <title>{% if title %} {{ title }} {% else %} Book Review {% endif %}</title>
+  </head>
+  <body>
+    {% include "nav.html" %} {% block content %}{% endblock content %}
+  </body>
+</html>
