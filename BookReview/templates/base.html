@@ -3,9 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=`, initial-scale=1.0" />
-    <title>{% if title %} {{ title }} {% else %} Book Review {% endif %}</title>
+    <meta name="description" content="Book Review App">
+    <meta name="keywords" content="Book Review App">
+    <title>
+      {% if title %}
+        {{ title }}
+      {% else %}
+        Book Review
+      {% endif %}
+    </title>
   </head>
   <body>
-    {% include "nav.html" %} {% block content %}{% endblock content %}
+    {% include "nav.html" %}
+    {% block content %}
+    {% endblock content %}
   </body>
 </html>
