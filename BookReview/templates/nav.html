@@ -1,12 +1,18 @@
-<nav>
-    <a href="{% url "index" %}">Home</a>
-    <a href="#">Books</a>
-    <a href="#">Authors</a>
-    {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'signup' %}">Signup</a>
-    {% endif %}
-    <p>{{ user.username }}</p>
+<nav class="bg-blue-400 py-5 px-8 shadow-md text-white flex justify-between items-center text-xl">
+    <a href="{% url "index" %}"
+       class="text-2xl font-bold hover:-translate-y-1 transition">Book Review</a>
+    <div class="space-x-3">
+        <a class="hover:text-gray-200" href="{% url "index" %}">Home</a>
+        <a class="hover:text-gray-200" href="#">Books</a>
+        <a class="hover:text-gray-200" href="#">Authors</a>
+    </div>
+    <div class="flex items-center space-x-2">
+        {% if user.is_authenticated %}
+            <a class="px-3 py-2 bg-red-300 rounded-full" href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'signup' %}">Signup</a>
+        {% endif %}
+        <p>{{ user.username }}</p>
+    </div>
 </nav>

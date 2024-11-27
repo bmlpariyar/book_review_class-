@@ -1,21 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>This is a index page</h1>
-    <button>
-        <a href="{% url 'new_book_from' %}">New Book</a>
-    </button>
-    <br>
-    <br>
-    {% for book in books %}
-        <a href="{% url "book_details" book.id %}">
-            <p>{{ book.title }}</p>
-            <p>{{ book.description }}</p>
-            {% if user.is_authenticated and user.userprofile.is_admin %}
-                <button>
-                    <a href="{% url 'delete_book' book.id %}">Delete</a>
-                </button>
-            {% endif %}
-            <hr>
-        </a>
-    {% endfor %}
+    <div class="w-full mb-5">
+        <a class=" px-3 py-2 bg-purple-400 rounded-full text-white hover:bg-purple-500"
+           href="{% url 'new_book_from' %}">New Book</a>
+    </div>
+    <div class="grid grid-cols-4 gap-4">
+        {% for book in books %}
+            <div class=" h-[30rem] flex flex-col justify-between">
+                <a href="{% url "book_details" book.id %}" class="flex flex-col h-full">
+                    {% if book.cover_image %}
+                        <img class="object-cover rounded-lg w-auto h-[320px] hover:opacity-80"
+                             src="{{ book.cover_image.url }}"
+                             height=""
+                             width=""
+                             alt="book_cover">
+                    {% else %}
+                        <div class="h-[320px] w-[320px] bg-gray-400 opacity-70 hover:bg-gray-300 rounded-lg flex items-center justify-center text-3xl font-thin">
+                            No image
+                        </div>
+                    {% endif %}
+                    <p class="text-2xl font-bold mt-3">{{ book.title }}</p>
+                    <p class="text-md mb-3 min-h-[4rem]">{{ book.description | truncatechars:80 }}</p>
+                    <hr class="border-2 rounded-full ">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock content %}
