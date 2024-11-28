@@ -1,33 +1,72 @@
-<h2>Reviews</h2>
-{% for review in reviews %}
-  <p>{{ review.user.username }}</p>
-  <p>{{ review.rating }}</p>
-  <p>{{ review.review_text }}</p>
-  <p>{{ review.created_at|date:"Y-m-d H:i" }}</p>
-  <a href="#" onclick="commentReview({{ review.id }})">Comment</a>
-  {% include "reviews/review_comment.html" %}
-  <hr>
-  {% include "reviews/edit_review.html" %}
-  <hr>
-  <div style="padding-left: 40px">
-    {% for comment in review.comments.all %}
-      <p>{{ comment.user.username }}</p>
-      <p>{{ comment.comment_text }}</p>
-      <hr>
-    {% endfor %}
-  </div>
-  {% if user.is_authenticated and review.user == user %}
-    <div>
-      <button class="edit-button" onclick="editReview({{ review.id }})">Edit</button>
-      <button>
-        <a href="{% url 'delete_review' review.id %}">Delete</a>
-      </button>
+<div>
+  <h2 class="text-4xl font-bold my-5">Reviews</h2>
+  <div>
+    {% for review in reviews %}
+      <div class="flex flex-row space-x-3">
+        <div class="flex-none">
+          {% if review.user.userprofile.avatar %}
+            <img src="{{ review.user.userprofile.avatar.url }}"
+                 class="rounded-full h-12 w-12"
+                 height=""
+                 width=""
+                 alt="">
+          {% else %}
+            <div class=" h-12 w-12 bg-gray-400 rounded-full text-xs"></div>
+          {% endif %}
+        </div>
+        <div>
+          <div class="flex items-center space-x-5">
+            <p class="text-lg font-bold">{{ review.user.username|capfirst }}</p>
+            <p class="text-sm text-gray-600">{{ review.created_at|date:"Y-m-d h:i A" }}</p>
+          </div>
+          <p>{{ review.review_text }}</p>
+          <p>{{ review.rating }}</p>
+          <div class="flex space-x-3 font-bold text-gray-700 items-center mb-3 transition">
+            <a class="cursor-pointer hover:text-gray-800 hover:border-b-2 hover:border-gray-800"
+               href="#"
+               onclick="commentReview({{ review.id }})">Comment</a>
+            {% if user.is_authenticated and review.user == user %}
+              <div class="space-x-3">
+                <button class="edit-button cursor-pointer hover:text-gray-800 hover:border-b-2 hover:border-gray-800"
+                        onclick="editReview({{ review.id }})">Edit</button>
+                <a class="cursor-pointer hover:text-gray-800 hover:border-b-2 hover:border-gray-800"
+                   href="{% url 'delete_review' review.id %}">Delete</a>
+              </div>
+            {% endif %}
+          </div>
+          {% include "reviews/edit_review.html" %}
+          {% include "reviews/review_comment.html" %}
+        </div>
+      </div>
+      <div class="pl-16">
+        <hr class="border-2 rounded-full mb-4">
+        {% for comment in review.comments.all %}
+          <div class="flex space-x-4 mb-4">
+            <div class="flex-none">
+              {% if comment.user.userprofile.avatar %}
+                <img src="{{ review.user.userprofile.avatar.url }}"
+                     class="rounded-full h-12 w-12"
+                     height=""
+                     width=""
+                     alt="">
+              {% else %}
+                <div class=" h-12 w-12 bg-gray-400 rounded-full text-xs"></div>
+              {% endif %}
+            </div>
+            <div>
+              <p class="text-lg font-bold">
+                {{ comment.user.username|capfirst }} <span class="text-sm font-normal text-gray-600">{{ comment.created_at|date:"Y-m-d h:i A" }}</span>
+              </p>
+              <p>{{ comment.comment_text }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
     </div>
-  {% endif %}
-  <hr />
-{% empty %}
-  <p>No reviews yet. Be the first to review!</p>
-{% endfor %}
+  {% empty %}
+    <p>No reviews yet. Be the first to review!</p>
+  {% endfor %}
+</div>
 <script>
   function editReview(reviewId) {
     document.querySelectorAll(".edit-form").forEach(function (form) {

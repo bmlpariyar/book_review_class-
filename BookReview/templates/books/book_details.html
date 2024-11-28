@@ -1,25 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
-  <div>
-    <p>{{ book.title }}</p>
-    <p>{{ book.description }}</p>
-    <p>{{ book.published_date }}</p>
-    <p>{{ book.author.name }}</p>
-    <hr />
+  <div class="p-10 shadow-lg bg-white rounded-lg ">
+    <div class="grid grid-cols-3 mb-5">
+      <div class="col-span-2">
+        {% if book.cover_image %}
+          <img src="{{ book.cover_image.url }}"
+               height=""
+               width=""
+               class="object-cover rounded-lg"
+               alt="book cover">
+        {% else %}
+          <div class="h-full w-full bg-gray-400 opacity-70 hover:bg-gray-300 rounded-lg flex items-center justify-center text-3xl font-thin">
+            No image
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-span-1 px-5">
+        <p class="text-3xl font-bold mb-2">{{ book.title }}</p>
+        <div class="space-y-2">
+          <label class="text-lg font-medium text-gray-900" for="description">Summary</label>
+          <p class="text-md">{{ book.description }}</p>
+        </div>
+        <div class="space-y-2 mt-3">
+          <label class="text-lg font-medium text-gray-900" for="published_date">Published Date</label>
+          <p class="mb-2">{{ book.published_date }}</p>
+        </div>
+        <p class="mt-2 font-bold text-lg">Author: {{ book.author.name }}</p>
+        <hr class="border-2 rounded-full mt-3">
+        <div class="flex space-x-3 mt-5">
+          {% if user.is_authenticated and user.userprofile.is_admin %}
+            <a class="px-3 py-2 bg-red-500 rounded-lg text-white"
+               href="{% url 'delete_book' book.id %}">Delete</a>
+            <a class="px-3 py-2 bg-blue-500 rounded-lg text-white"
+               href="{% url 'edit_book' book.id %}">Edit</a>
+          {% endif %}
+          <a class="px-3 py-2 bg-gray-500 rounded-lg text-white"
+             href="{% url 'index' %}">Back</a>
+        </div>
+      </div>
+    </div>
+    <hr class="border-2 rounded-full">
     {% include "reviews/review_list.html" %}
-    <hr />
     {% include "reviews/add_review.html" %}
-    <hr />
-    {% if user.is_authenticated and user.userprofile.is_admin %}
-      <button>
-        <a href="{% url 'delete_book' book.id %}">Delete</a>
-      </button>
-      <a href="{% url 'edit_book' book.id %}">
-        <button>Edit</button>
-      </a>
-    {% endif %}
-    <button>
-      <a href="{% url 'index' %}">Back</a>
-    </button>
   </div>
 {% endblock content %}

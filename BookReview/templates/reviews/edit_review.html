@@ -1,21 +1,29 @@
-<div  id="edit-form-{{ review.id }}" class="edit-form" style="display:none;">
-    <form action="{% url 'edit_review' review.id %}" method="POST">
-      {% csrf_token %} {% if messages %} {% for message in messages %}
-      <div style="color: red">{{ message }}</div>
-      {% endfor %} {% endif %} {% if form.errors %} {{ form.errors }} {% endif %}
-      <input
-        type="text"
-        name="review_text"
-        id="review_text"
-        value="{{ review.review_text }}"
-        placeholder="Enter your review"
-      />
-      <select name="rating" id="rating">
+<div id="edit-form-{{ review.id }}" class="edit-form hidden">
+  <form action="{% url 'edit_review' review.id %}" method="post">
+    {% csrf_token %}
+    {% if messages %}
+      {% for message in messages %}<div class="text-red-500">{{ message }}</div>{% endfor %}
+    {% endif %}
+    {% if form.errors %}{{ form.errors }}{% endif %}
+    <div class="flex">
+      <input type="text"
+             name="review_text"
+             id="review_text"
+             class="w-full rounded-l-lg bg-gray-50 border border-gray-200 text-gray-700 focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+             value="{{ review.review_text }}"
+             placeholder="Enter your review" />
+      <select class="border border-gray-200 text-gray-700"
+              name="rating"
+              id="rating">
         <option value="">Select Rating</option>
         {% for rating in review_ratings %}
-        <option value="{{ rating.0 }}" {% if rating.0 == review.rating %}selected{% endif %}>{{ rating.1 }}</option>
+          <option value="{{ rating.0 }}"
+                  {% if rating.0 == review.rating %}selected{% endif %}>{{ rating.1 }}</option>
         {% endfor %}
       </select>
-      <input type="submit" value="Submit" />
-    </form>
+      <input class="px-3 py-2 bg-blue-500 text-sm rounded-r-lg box-border text-white"
+             type="submit"
+             value="Submit" />
+    </div>
+  </form>
 </div>
