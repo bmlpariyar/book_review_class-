@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="p-10 shadow-lg bg-white rounded-lg ">
+            <div class="grid grid-rows-2 gap-4">
+                <div class="shadow-lg row-span-1 p-5">
+                    <p class="my-5 text-3xl font-bold">User Profile</p>
+                    <hr class="border-2 rounded-full">
+                    <div class="flex p-10">
+                        <div class="flex-none">
+                            {% if user.userprofile.avatar %}
+                                <img src="{{ user.userprofile.avatar.url }}"
+                                     class="rounded-full h-[200px] w-[200px] "
+                                     height=""
+                                     width=""
+                                     alt="">
+                            {% else %}
+                                <div class="w-[200px] h-[200px] rounded-full bg-gray-500"></div>
+                            {% endif %}
+                        </div>
+                        <div class="px-10">
+                            <p class="text-4xl font-bold text-gray-800">{{ user.username|capfirst }}</p>
+                            <p class="text-sm font-light text-gray-500">{{ user.email }}</p>
+                            <p>{{ user.userprofile.bio }}</p>
+                            <div class="mb-2 mt-2">
+                                {% if user.userprofile.is_admin %}
+                                    <p class="px-3 py-1 bg-green-300 text-gray-700 inline-block rounded-full text-xs">Admin</p>
+                                {% endif %}
+                                {% if user.userprofile.is_reviewer %}
+                                    <p class="px-3 py-1 bg-purple-300 text-gray-700 inline-block rounded-full text-xs">Reviewer</p>
+                                {% endif %}
+                            </div>
+                            <hr class="border-2 rounded-full mb-5">
+                            <a class="bg-red-400 text-white rounded-lg px-3 py-1 mt-5"
+                               href="{% url 'logout' %}">Logout</a>
+                            <a class="bg-indigo-400 text-white rounded-lg px-3 py-1 mt-5"
+                               href="{% url "edit_user_profile" %}">Edit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-span-1 shadow-lg p-5">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="grid-cols-1">
+                            <div class="p-5 shadow-lg rounded-lg">
+                                <h1 class="text-3xl font-bold text-gray-800">Reviews</h1>
+                                <hr class="border-2 rounded-full my-3">
+                                <div>
+                                    {% for review in reviews %}
+                                        <p class="text-lg font-bold ">{{ review.book.title }}</p>
+                                        <p>{{ review.review_text|truncatechars:100 }}</p>
+                                        <p>{{ review.rating }}</p>
+                                        <hr class="border rounded-full my-2">
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-cols-1">
+                            <div class="p-5 shadow-lg rounded-lg">
+                                <h1 class="text-3xl font-bold text-gray-800">Comments</h1>
+                                <hr class="border-2 rounded-full my-3">
+                                {% for comment in comments %}
+                                    <p class="text-lg font-bold ">{{ comment.review.book.title }}</p>
+                                    <p class="text-sm text-gray-600">{{ comment.review.review_text|truncatechars:50 }}</p>
+                                    <i class="text-sm text-gray-600">{{ comment.comment_text|truncatechars:150 }}</i>
+                                    <hr class="border rounded-full my-2">
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>You are not authenticated</p>
+    {% endif %}
+{% endblock content %}

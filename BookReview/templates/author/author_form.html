@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="p-10 shadow-lg bg-white rounded-lg">
+        <p class="text-3xl font-bold py-5">Create Author</p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="space-y-5">
+                <div>
+                    <label class="block text-lg font-medium text-gray-900" for="name">Name</label>
+                    <input class="w-full bg-gray-50 rounded-lg border border-gray-400 focus:ring-indigo-500 focus:border-indigo-500 block p-2.5"
+                           type="text"
+                           name="name"
+                           placeholder="Author name"
+                           id="name">
+                </div>
+                <div>
+                    <label class="block text-lg font-medium text-gray-900" for="bio">Bio</label>
+                    <textarea class="w-full bg-gray-50 rounded-lg border border-gray-400 focus:ring-indigo-500 focus:border-indigo-500 block p-2.5"
+                              name="bio"
+                              id="bio"
+                              cols="30"
+                              placeholder="Author bio"
+                              rows="10"></textarea>
+                </div>
+                <div>
+                    <label class="block text-lg font-medium text-gray-900" for="profile_picture">Profile Picture</label>
+                    <input class="file-input"
+                           type="file"
+                           name="profile_picture"
+                           id="profile_picture">
+                </div>
+                <div class="flex justify-between">
+                    <button class="px-3 py-2 rounded-lg bg-indigo-500 text-white hover:bg-indigo-600"
+                            type="submit">Submit</button>
+                    <a href="{% url 'authors' %}"
+                       class="px-3 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600"
+                       type="submit">Back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

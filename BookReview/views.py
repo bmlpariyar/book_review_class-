@@ -1,8 +1,23 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Book, Author, Review
-from .forms import BookForm, ReviewForm
+from .forms import BookForm, ReviewForm, AuthorForm
 from django.contrib import messages
+from django.http import HttpResponseForbidden
+from functools import wraps
+import logging
+
+
+
+
+def admin_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if not request.user.userprofile.is_admin:
+            logging.error("User is not admin")
+            return redirect("/")
+        return view_func(request, *args, **kwargs)
+    return _wrapped_view
 
 def index(request):
     books = Book.objects.all()
@@ -18,9 +33,11 @@ def book_details(request, book_id):
     return render(request, "books/book_details.html", context)
 
 
-
+@admin_required
 @login_required
 def new_book(request, book_id=None):
+    # if not request.user.userprofile.is_admin:
+    #     return redirect("/")
     book = get_object_or_404(Book, id=book_id) if book_id else None
     if request.method == "POST":
         form = BookForm(request.POST, request.FILES, instance=book)
@@ -93,3 +110,19 @@ def add_comment(request, review_id):
         comment = review.comments.create(user=request.user, comment_text=comment_text)
         return redirect(f"/book_details/{review.book.id}")
     return redirect(f"/book_details/{review.book.id}")
+
+
+def authors(request):
+    author = Author.objects.all()
+    context = {"authors": author}
+    return render(request, "author/authors.html", context)
+
+def create_author(request):
+    if request.method == "POST":
+        form = AuthorForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("/authors")
+    else:
+        form = AuthorForm()
+    return render(request, "author/author_form.html", {"form": form})

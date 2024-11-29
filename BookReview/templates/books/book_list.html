@@ -1,9 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="w-full mb-5">
-        <a class=" px-3 py-2 bg-purple-400 rounded-full text-white hover:bg-purple-500"
-           href="{% url 'new_book_from' %}">New Book</a>
-    </div>
     <div class="grid grid-cols-4 gap-4">
         {% for book in books %}
             <div class=" h-[30rem] flex flex-col justify-between">
@@ -15,12 +11,12 @@
                              width=""
                              alt="book_cover">
                     {% else %}
-                        <div class="h-[320px] w-[320px] bg-gray-400 opacity-70 hover:bg-gray-300 rounded-lg flex items-center justify-center text-3xl font-thin">
+                        <div class="h-[320px] w-auto bg-gray-400 opacity-70 hover:bg-gray-300 rounded-lg flex items-center justify-center text-3xl font-thin">
                             No image
                         </div>
                     {% endif %}
                     <p class="text-2xl font-bold mt-3">{{ book.title }}</p>
-                    <p class="text-md mb-3 min-h-[4rem]">{{ book.description | truncatechars:80 }}</p>
+                    <p class="text-md mb-3 min-h-[4rem] max-h-[4rem] overflow-hidden ">{{ book.description | truncatechars:60 }}</p>
                     <hr class="border-2 rounded-full ">
                 </a>
             </div>

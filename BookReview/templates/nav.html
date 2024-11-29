@@ -1,18 +1,29 @@
-<nav class="bg-blue-400 py-5 px-8 shadow-md text-white flex justify-between items-center text-xl">
+<nav class="bg-gray-200 py-3 px-8 shadow-md text-gray-900 flex justify-between items-center text-xl">
     <a href="{% url "index" %}"
-       class="text-2xl font-bold hover:-translate-y-1 transition">Book Review</a>
+       class="text-3xl text-indigo-600 font-bold hover:-translate-y-1 transition">Book Review</a>
     <div class="space-x-3">
-        <a class="hover:text-gray-200" href="{% url "index" %}">Home</a>
-        <a class="hover:text-gray-200" href="#">Books</a>
-        <a class="hover:text-gray-200" href="#">Authors</a>
+        <a class="hover:text-indigo-600" href="{% url "index" %}">Home</a>
+        <a class="hover:text-indigo-600" href="{% url "authors" %}">Authors</a>
+        <a class="hover:text-indigo-600 " href="{% url "user_profile" %}">Settings</a>
     </div>
     <div class="flex items-center space-x-2">
+        {% if user.is_authenticated and user.userprofile.is_admin %}
+            <a class=" px-3 text-sm py-2 bg-indigo-600 rounded-lg text-white hover:bg-indigo-700"
+               href="{% url 'new_book_from' %}">New Book</a>
+        {% endif %}
         {% if user.is_authenticated %}
-            <a class="px-3 py-2 bg-red-300 rounded-full" href="{% url 'logout' %}">Logout</a>
+            {% if user.userprofile.avatar %}
+                <img src="{{ user.userprofile.avatar.url }}"
+                     class="rounded-full h-12 w-12"
+                     height=""
+                     width=""
+                     alt="">
+            {% else %}
+                <div class=" h-12 w-12 bg-gray-400 rounded-full text-xs"></div>
+            {% endif %}
         {% else %}
             <a href="{% url 'login' %}">Login</a>
             <a href="{% url 'signup' %}">Signup</a>
         {% endif %}
-        <p>{{ user.username }}</p>
     </div>
 </nav>

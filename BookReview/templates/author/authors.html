@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="p-10 shadow-lg bg-white rounded-lg">
+        <a class="px-3 py-2 bg-indigo-500 rounded-lg text-white hover:bg-indigo-600"
+           href="{% url "new_author" %}">New Author</a>
+        <div class="space-y-2 mt-3">
+            <div class="overflow-hidden border rounded-lg">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-indigo-500 text-white">
+                                <th class="px-3 py-4">SN</th>
+                                <th class="px-3 py-4">Name</th>
+                                <th class="px-3 py-4">Bio</th>
+                                <th class="px-3 py-4">Created At</th>
+                                <th class="px-3 py-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for author in authors %}
+                                <tr class="border-b hover:bg-indigo-200 hover:text-gray-600 trasition">
+                                    <td class="text-center py-5">{{ forloop.counter }}</td>
+                                    <td class="text-center py-5">{{ author.name }}</td>
+                                    <td class="text-center py-5">{{ author.bio|truncatechars:30 }}</td>
+                                    <td class="text-center py-5">{{ author.created_at|date:"Y-m-d" }}</td>
+                                    <td class="text-center py-5">
+                                        <a class="px-3 py-2 bg-indigo-500 rounded-lg text-white hover:bg-indigo-600"
+                                           href="">Edit</a>
+                                        <a class="px-3 py-2 bg-red-500 rounded-lg text-white hover:bg-red-600"
+                                           href="">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

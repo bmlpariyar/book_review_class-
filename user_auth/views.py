@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponse
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from user_auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login as auth_login, logout, authenticate
 from django.contrib import messages
+from BookReview.models import Review, Comment
 
 
 
@@ -24,7 +25,6 @@ def login(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
-            # breakpoint()
             auth_login(request, user)
             messages.success(request, "Logged in successfully")
             return redirect('index')
@@ -35,3 +35,13 @@ def login(request):
 def logout_user(request):
     logout(request)
     return redirect('index')
+
+def user_profile(request):
+    req_user = request.user
+    review = Review.objects.filter(user=req_user)
+    comments = Comment.objects.filter(user=req_user)
+    context = {"reviews": review,"comments": comments}
+    return render(request, 'auth/user_profile.html', context)
+
+def edit_user_profile(request):
+    return render(request, 'auth/edit_user_profile.html')

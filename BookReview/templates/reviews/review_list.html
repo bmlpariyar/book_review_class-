@@ -62,10 +62,10 @@
           </div>
         {% endfor %}
       </div>
-    </div>
-  {% empty %}
-    <p>No reviews yet. Be the first to review!</p>
-  {% endfor %}
+    {% empty %}
+      <p>No reviews yet. Be the first to review!</p>
+    {% endfor %}
+  </div>
 </div>
 <script>
   function editReview(reviewId) {
