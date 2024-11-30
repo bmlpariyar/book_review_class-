@@ -2,7 +2,7 @@
 {% block content %}
   <div class="p-10 shadow-lg bg-white rounded-lg ">
     <div class="grid grid-cols-3 mb-5">
-      <div class="col-span-2">
+      <div class="col-span-1">
         {% if book.cover_image %}
           <img src="{{ book.cover_image.url }}"
                height=""
@@ -15,7 +15,7 @@
           </div>
         {% endif %}
       </div>
-      <div class="col-span-1 px-5">
+      <div class="col-span-2 px-5">
         <p class="text-3xl font-bold mb-2">{{ book.title }}</p>
         <div class="space-y-2">
           <label class="text-lg font-medium text-gray-900" for="description">Summary</label>

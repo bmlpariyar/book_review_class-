@@ -15,7 +15,7 @@
                             No image
                         </div>
                     {% endif %}
-                    <p class="text-2xl font-bold mt-3">{{ book.title }}</p>
+                    <p class="text-2xl font-bold mt-3">{{ book.title|truncatechars:20 }}</p>
                     <p class="text-md mb-3 min-h-[4rem] max-h-[4rem] overflow-hidden ">{{ book.description | truncatechars:60 }}</p>
                     <hr class="border-2 rounded-full ">
                 </a>

@@ -27,7 +27,7 @@
                                         <a class="px-3 py-2 bg-indigo-500 rounded-lg text-white hover:bg-indigo-600"
                                            href="">Edit</a>
                                         <a class="px-3 py-2 bg-red-500 rounded-lg text-white hover:bg-red-600"
-                                           href="">Delete</a>
+                                           href="{% url "delete_author" author.id %}">Delete</a>
                                     </td>
                                 </tr>
                             {% endfor %}

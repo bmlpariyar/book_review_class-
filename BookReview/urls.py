@@ -12,4 +12,5 @@ urlpatterns = [
     path("add_comment/<int:review_id>", add_comment, name="add_comment" ),
     path("authors/", authors, name="authors" ),
     path("new_author/", create_author, name="new_author" ),
+    path("delete_author/<int:author_id>", delete_author, name="delete_author" ),
 ]

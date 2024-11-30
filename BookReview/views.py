@@ -126,3 +126,12 @@ def create_author(request):
     else:
         form = AuthorForm()
     return render(request, "author/author_form.html", {"form": form})
+
+
+def delete_author(request, author_id):
+    try:
+        author = Author.objects.get(id=author_id)
+        author.delete()
+        return redirect("/authors")
+    except Exception as e:
+        return HttpResponse(e)

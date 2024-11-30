@@ -828,10 +828,6 @@ select {
   grid-column: span 2 / span 2;
 }
 
-.row-span-1 {
-  grid-row: span 1 / span 1;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -866,6 +862,10 @@ select {
 
 .mb-5 {
   margin-bottom: 1.25rem;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
 }
 
 .mt-2 {
@@ -917,6 +917,14 @@ select {
   height: 3rem;
 }
 
+.h-8 {
+  height: 2rem;
+}
+
+.h-\[150px\] {
+  height: 150px;
+}
+
 .h-\[200px\] {
   height: 200px;
 }
@@ -937,22 +945,6 @@ select {
   height: 100vh;
 }
 
-.h-6 {
-  height: 1.5rem;
-}
-
-.h-8 {
-  height: 2rem;
-}
-
-.h-\[100px\] {
-  height: 100px;
-}
-
-.h-\[150px\] {
-  height: 150px;
-}
-
 .max-h-\[4rem\] {
   max-height: 4rem;
 }
@@ -965,6 +957,14 @@ select {
   width: 3rem;
 }
 
+.w-8 {
+  width: 2rem;
+}
+
+.w-\[150px\] {
+  width: 150px;
+}
+
 .w-\[200px\] {
   width: 200px;
 }
@@ -975,22 +975,6 @@ select {
 
 .w-full {
   width: 100%;
-}
-
-.w-6 {
-  width: 1.5rem;
-}
-
-.w-8 {
-  width: 2rem;
-}
-
-.w-\[100px\] {
-  width: 100px;
-}
-
-.w-\[150px\] {
-  width: 150px;
 }
 
 .min-w-\[60\%\] {
@@ -1025,10 +1009,6 @@ select {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.grid-rows-2 {
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-}
-
 .flex-row {
   flex-direction: row;
 }
@@ -1055,6 +1035,10 @@ select {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -1164,6 +1148,11 @@ select {
   border-color: rgb(156 163 175 / var(--tw-border-opacity, 1));
 }
 
+.bg-blue-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(191 219 254 / var(--tw-bg-opacity, 1));
+}
+
 .bg-blue-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(59 130 246 / var(--tw-bg-opacity, 1));
@@ -1197,11 +1186,6 @@ select {
 .bg-gray-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1));
-}
-
-.bg-gray-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
 }
 
 .bg-green-300 {
@@ -1249,9 +1233,12 @@ select {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
-.bg-blue-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(191 219 254 / var(--tw-bg-opacity, 1));
+.fill-yellow-400 {
+  fill: #facc15;
+}
+
+.stroke-none {
+  stroke: none;
 }
 
 .object-cover {
@@ -1410,11 +1397,6 @@ select {
 
 .tracking-normal {
   letter-spacing: 0em;
-}
-
-.text-gray-300 {
-  --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity, 1));
 }
 
 .text-gray-400 {
